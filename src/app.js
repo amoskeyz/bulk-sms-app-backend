@@ -7,6 +7,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => res.status(200).json({ message: 'Welcome to Bulk Sms App' }));
+
 const port = process.env.PORT || 3000;
 
 const dbconnection = db.sequelize;
@@ -20,6 +22,7 @@ dbconnection
   })
   .catch((e) => {
   /* istanbul ignore next */
-    console.log(e);
     throw e.message;
   });
+
+export default app;
