@@ -31,5 +31,32 @@ export default {
       /* istanbul ignore next */
       return errorStatus(res, 500, 'Server Error');
     }
+  },
+  handleLogin: async (req, res) => {
+    const {
+      email, password
+    } = req.body;
+
+    const newEmail = email.toLowerCase();
+
+    try {
+      const user = await db.User.findOne({
+        where: { email: newEmail }
+      });
+
+      if (!user) {
+        return errorStatus(res, 400, 'Invalid email or password');
+      }
+
+      const isPasswordValid = await user.passwordsMatch(password);
+
+      if (!isPasswordValid) {
+        return errorStatus(res, 400, 'Invalid email or password');
+      }
+      return successStatus(res, 200, 'data', { ...user.response() });
+    } catch (e) {
+      /* istanbul ignore next */
+      return errorStatus(res, 500, 'Server Error');
+    }
   }
 };

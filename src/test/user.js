@@ -84,4 +84,47 @@ describe('/api/v1/user', () => {
         });
     });
   });
+  describe('LOGIN', () => {
+    it('should sign in an existing user', (done) => {
+      chai.request(app)
+        .post('/api/v1/user/login')
+        .send(user[2])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('token');
+          done();
+        });
+    });
+    it('should return an error with incorrect input details', (done) => {
+      chai.request(app)
+        .post('/api/v1/user/login')
+        .send(user[3])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+    it('should return an error with incorrect input details', (done) => {
+      chai.request(app)
+        .post('/api/v1/user/login')
+        .send(user[4])
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+    it('should return error for invalid field', (done) => {
+      chai.request(app)
+        .post('/api/v1/user/login')
+        .send({ email: '' })
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
 });
