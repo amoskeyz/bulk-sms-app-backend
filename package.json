@@ -4,10 +4,15 @@
   "description": "Bulk Sms app backend",
   "main": "index.js",
   "scripts": {
+    "migrate": "cross-env NODE_ENV=development sequelize db:migrate",
+    "unmigrate": "cross-env NODE_ENV=development sequelize db:migrate:undo:all",
+    "test:db:migration": "cross-env NODE_ENV=test sequelize db:migrate",
+    "test:undo:migration": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/app.js",
     "lint": "eslint ./src --fix",
-    "test": "cross-env NODE_ENV=test nyc --require @babel/register mocha src/test --exit"
+    "test": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register mocha src/test --exit",
+    "testdev": "npm run test:undo:migration && npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register  mocha src/test --exit && npm run test:undo:migration"
   },
   "repository": {
     "type": "git",
@@ -23,12 +28,15 @@
   },
   "homepage": "https://github.com/amoskeyz/bulk-sms-app-backend#readme",
   "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^7.0.0",
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
