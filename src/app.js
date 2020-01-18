@@ -1,13 +1,21 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import db from './db/models';
+import Routes from './routes';
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+Routes(app);
+
 app.get('/', (req, res) => res.status(200).json({ message: 'Welcome to Bulk Sms App' }));
+
+app.use((req, res) => res.status(404).json({
+  status: 404,
+  error: `Route '${req.url}' Not found`
+}));
 
 const port = process.env.PORT || 3000;
 

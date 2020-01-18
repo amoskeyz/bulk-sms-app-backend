@@ -9,7 +9,8 @@ module.exports = {
     dialect: 'postgres',
   },
   test: {
-    use_env_variable: 'DATABASE_URL_TEST'
+    use_env_variable: 'DATABASE_URL_TEST',
+    logging: false
   },
   production: {
     use_env_variable: 'DATABASE_URL'
