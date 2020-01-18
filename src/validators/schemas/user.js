@@ -19,3 +19,13 @@ export const signUp = Joi.object().keys({
     .min(6),
   username: Joi.string().required(),
 });
+
+export const login = Joi.object().keys({
+  email: Joi.string()
+    .email()
+    .required()
+    .trim(),
+  password: Joi.string()
+    .required()
+    .min(6),
+});

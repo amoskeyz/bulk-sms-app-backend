@@ -14,6 +14,18 @@ const user = [
     password: '5m5am0a843r03',
     username: 'testt'
   },
+  {
+    email: 'user1@gmail.com',
+    password: '5m5am0a843r03',
+  },
+  {
+    email: 'userhhj1@gmail.com',
+    password: '5m5am0a843r03',
+  },
+  {
+    email: 'user1@gmail.com',
+    password: '5m5am0ajhjk843r03',
+  },
 ];
 
 export default user;
