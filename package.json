@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/app.js",
     "lint": "eslint ./src --fix",
     "test": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register mocha src/test --exit",
-    "testdev": "npm run test:undo:migration && npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register  mocha src/test --exit && npm run test:undo:migration"
+    "testdev": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register  mocha src/test --exit && npm run test:undo:migration"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/amoskeyz/bulk-sms-app-backend#readme",
   "dependencies": {
     "@hapi/joi": "^16.1.8",
+    "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
@@ -38,10 +39,12 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^7.0.0",
+    "nexmo": "^2.5.3",
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1",
+    "sinon": "^8.1.0",
     "twilio": "^3.39.2"
   },
   "devDependencies": {

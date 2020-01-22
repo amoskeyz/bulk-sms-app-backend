@@ -31,3 +31,5 @@ export const validateJoi = (validateObject, schemaData) => {
 export const getToken = (id, email) => jwt.sign({ id, email }, process.env.SECRET, {
   expiresIn: '5h',
 });
+
+export const decodeToken = token => jwt.verify(token, process.env.SECRET);
