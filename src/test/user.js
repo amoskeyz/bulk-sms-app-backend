@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaihttp from 'chai-http';
 import app from '../app';
+import { destroyModel } from '../utils/helpers';
 import user from './data/user';
 
 const { expect } = chai;
@@ -10,6 +11,10 @@ chai.use(chaihttp);
 
 
 describe('/api/v1/user', () => {
+  before(async () => {
+    await destroyModel('User');
+  });
+
   describe('SIGN UP', () => {
     it('should sign up a new user', (done) => {
       chai.request(app)
