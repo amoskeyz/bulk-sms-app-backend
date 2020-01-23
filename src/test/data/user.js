@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+// import { isAdministrator } from '../../middleware';
+
+dotenv.config();
+
 const user = [
   {
     firstName: 'test',
@@ -26,6 +31,18 @@ const user = [
     email: 'usero1@gmail.com',
     password: '5m5am0ajhjk843r03',
   },
+  {
+    email: process.env.SUPER_ADMIN_EMAIL,
+    password: process.env.SUPER_ADMIN_PASSWORD_TEST
+  },
+  {
+    firstName: 'admin',
+    lastName: 'super',
+    email: process.env.SUPER_ADMIN_EMAIL,
+    password: process.env.SUPER_ADMIN_PASSWORD_TEST,
+    username: 'isAdministrator',
+    isAdmin: true
+  }
 ];
 
 export default user;

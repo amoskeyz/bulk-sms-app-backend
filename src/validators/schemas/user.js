@@ -1,6 +1,5 @@
 import Joi from '@hapi/joi';
 
-// const schema = {
 export const signUp = Joi.object().keys({
   firstName: Joi.string()
     .regex(/^[A-Za-z]{3,}$/)

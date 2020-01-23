@@ -34,5 +34,21 @@ export default {
       console.log(e);
       return errorStatus(res, 400, 'Message Not Sent');
     }
-  }
+  },
+  creditUnit: async (req, res) => {
+    const { email, unit } = req.body;
+    try {
+      const user = await db.User.findOne({ where: { email } });
+
+      if (!user) return errorStatus(res, 404, 'User Not Found');
+
+      await user.update({ creditUnit: Number(user.creditUnit) + Number(unit) });
+
+      return successStatus(res, 200, 'data', { message: `${unit} credit unit added successfully to '${email}'` });
+    } catch (e) {
+    /* istanbul ignore next */
+      console.log(e);
+      return errorStatus(res, 500, 'Server Error');
+    }
+  },
 };

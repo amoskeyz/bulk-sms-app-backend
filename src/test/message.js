@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaihttp from 'chai-http';
 import sinon from 'sinon';
 import app from '../app';
-import { destroyModel } from '../utils/helpers';
+import { destroyModel, createUser } from '../utils/helpers';
 import user from './data/user';
 import message from './data/message';
 import messag from '../utils/message';
@@ -11,11 +11,14 @@ const { expect } = chai;
 chai.use(chaihttp);
 
 let userToken;
+let adminToken;
+
 let send;
 
-describe('/api/v1/user', () => {
+describe('/api/v1/message', () => {
   before(async () => {
     await destroyModel('User');
+    await createUser(user[6], 'User');
   });
 
   beforeEach((done) => {
@@ -28,7 +31,7 @@ describe('/api/v1/user', () => {
     done();
   });
 
-  describe('SIGN UP', () => {
+  describe('SEND MESSAGE', () => {
     it('should sign up a new user', (done) => {
       chai.request(app)
         .post('/api/v1/user/signup')
@@ -36,6 +39,7 @@ describe('/api/v1/user', () => {
         .end((err, res) => {
           const { token } = res.body.data;
           userToken = token;
+          // console.log(res.body)
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.have.property('token');
@@ -98,6 +102,67 @@ describe('/api/v1/user', () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.have.property('error');
           expect(res.body.error).to.equal('Insufficient Unit to perform this Operation');
+          done();
+        });
+    });
+  });
+  describe('CREDIT UNIT', () => {
+    it('should login admin', (done) => {
+      chai.request(app)
+        .post('/api/v1/user/login')
+        .send(user[5])
+        .end((err, res) => {
+          const { token } = res.body.data;
+          adminToken = token;
+          // console.log(user[6], res.body)
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('token');
+          done();
+        });
+    });
+    it('should return an error with invalid email', (done) => {
+      chai.request(app)
+        .put('/api/v1/message/credit')
+        .send({
+          email: 'insd@gjg.com',
+          unit: '200'
+        })
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(404);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('User Not Found');
+          done();
+        });
+    });
+    it('should credit user if admin', (done) => {
+      chai.request(app)
+        .put('/api/v1/message/credit')
+        .send({
+          email: 'usero1@gmail.com',
+          unit: '200'
+        })
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data.message).to.equal('200 credit unit added successfully to \'usero1@gmail.com\'');
+          done();
+        });
+    });
+    it('should return an error if not admin', (done) => {
+      chai.request(app)
+        .put('/api/v1/message/credit')
+        .send({
+          email: 'usero1@gmail.com',
+          unit: '200'
+        })
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('You Are Not Allowed to Access This Route');
           done();
         });
     });

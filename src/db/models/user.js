@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     username: DataTypes.STRING,
-    creditUnit: DataTypes.STRING
+    creditUnit: DataTypes.STRING,
+    isAdmin: DataTypes.BOOLEAN
   }, {
     hooks: {
       beforeCreate: async (user) => {
