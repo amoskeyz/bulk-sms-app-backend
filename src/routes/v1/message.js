@@ -8,5 +8,7 @@ const route = Router();
 
 route.post('/', Validators(sendMessage), authenticate, Message.handleMessage);
 route.put('/credit', authenticate, isAdministrator, Validators(creditUnit), Message.creditUnit);
+route.get('/', authenticate, Message.getSentMessage);
+route.get('/:messageId', authenticate, Message.getSingleMessage);
 
 export default route;

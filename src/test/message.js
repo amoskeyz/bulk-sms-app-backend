@@ -167,4 +167,51 @@ describe('/api/v1/message', () => {
         });
     });
   });
+  describe('GET MESSAGE', () => {
+    it('should get all message', (done) => {
+      chai.request(app)
+        .get('/api/v1/message')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('data');
+          done();
+        });
+    });
+    it('should get a message for a user', (done) => {
+      chai.request(app)
+        .get('/api/v1/message/1')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('recipient');
+          expect(res.body.data).to.have.property('sender');
+          expect(res.body.data).to.have.property('text');
+          done();
+        });
+    });
+    it('should error if message is not found', (done) => {
+      chai.request(app)
+        .get('/api/v1/message/7')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('Message Not Found');
+          done();
+        });
+    });
+    it('should not get another users message', (done) => {
+      chai.request(app)
+        .get('/api/v1/message/1')
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('Unauthorize Access');
+          done();
+        });
+    });
+  });
 });
