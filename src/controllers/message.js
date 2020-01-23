@@ -51,4 +51,35 @@ export default {
       return errorStatus(res, 500, 'Server Error');
     }
   },
+  getSentMessage: async (req, res) => {
+    try {
+      const { id } = req.user;
+      const sentMessage = await db.Message.findAll({ where: { userId: id } });
+
+      if (!sentMessage[0]) return errorStatus(res, 400, 'No Message Found');
+
+      return successStatus(res, 200, 'data', sentMessage);
+    } catch (e) {
+      /* istanbul ignore next */
+      console.log(e);
+      return errorStatus(res, 500, 'Server Error');
+    }
+  },
+  getSingleMessage: async (req, res) => {
+    try {
+      const { id } = req.user;
+      const { messageId } = req.params;
+      const singleMessage = await db.Message.findOne({ where: { id: messageId } });
+
+      if (singleMessage) {
+        if (singleMessage.userId !== id) return errorStatus(res, 400, 'Unauthorize Access');
+        return successStatus(res, 200, 'data', singleMessage);
+      }
+      return errorStatus(res, 400, 'Message Not Found');
+    } catch (e) {
+      /* istanbul ignore next */
+      console.log(e);
+      return errorStatus(res, 500, 'Server Error');
+    }
+  }
 };
