@@ -1,6 +1,5 @@
 import Joi from '@hapi/joi';
 
-// const schema = {
 export const sendMessage = Joi.object().keys({
   to: Joi.string()
     .min(11)
@@ -12,4 +11,13 @@ export const sendMessage = Joi.object().keys({
   text: Joi.string()
     .required()
     .trim(),
+});
+
+export const creditUnit = Joi.object().keys({
+  email: Joi.string()
+    .email()
+    .required()
+    .trim(),
+  unit: Joi.string()
+    .required()
 });

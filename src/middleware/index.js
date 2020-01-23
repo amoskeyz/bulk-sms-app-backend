@@ -26,3 +26,12 @@ export const authenticate = async (req, res, next) => {
     });
   }
 };
+
+export const isAdministrator = async (req, res, next) => {
+  const { isAdmin } = req.user;
+  if (isAdmin === false) {
+    return res.status(400).json({
+      error: 'You Are Not Allowed to Access This Route'
+    });
+  } next();
+};
