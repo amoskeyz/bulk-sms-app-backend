@@ -73,7 +73,27 @@ export default {
 
       if (singleMessage) {
         if (singleMessage.userId !== id) return errorStatus(res, 400, 'Unauthorize Access');
+
         return successStatus(res, 200, 'data', singleMessage);
+      }
+      return errorStatus(res, 400, 'Message Not Found');
+    } catch (e) {
+      /* istanbul ignore next */
+      console.log(e);
+      return errorStatus(res, 500, 'Server Error');
+    }
+  },
+  deleteMessage: async (req, res) => {
+    try {
+      const { id } = req.user;
+      const { messageId } = req.params;
+      const singleMessage = await db.Message.findOne({ where: { id: messageId } });
+
+      if (singleMessage) {
+        if (singleMessage.userId !== id) return errorStatus(res, 400, 'Unauthorize Access');
+
+        await singleMessage.destroy();
+        return successStatus(res, 200, 'message', 'Delete Successful');
       }
       return errorStatus(res, 400, 'Message Not Found');
     } catch (e) {
