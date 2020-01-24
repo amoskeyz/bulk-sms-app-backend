@@ -18,6 +18,7 @@ let send;
 describe('/api/v1/message', () => {
   before(async () => {
     await destroyModel('User');
+    await destroyModel('Message');
     await createUser(user[6], 'User');
   });
 
@@ -205,6 +206,41 @@ describe('/api/v1/message', () => {
     it('should not get another users message', (done) => {
       chai.request(app)
         .get('/api/v1/message/1')
+        .set('x-access-token', adminToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('Unauthorize Access');
+          done();
+        });
+    });
+  });
+  describe('DELETE MESSAGE', () => {
+    it('should delete a message for a user', (done) => {
+      chai.request(app)
+        .delete('/api/v1/message/1')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('Delete Successful');
+          done();
+        });
+    });
+    it('should error if message is not found', (done) => {
+      chai.request(app)
+        .delete('/api/v1/message/7')
+        .set('x-access-token', userToken)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(400);
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal('Message Not Found');
+          done();
+        });
+    });
+    it('should delete another users message', (done) => {
+      chai.request(app)
+        .delete('/api/v1/message/2')
         .set('x-access-token', adminToken)
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
