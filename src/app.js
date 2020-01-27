@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 import db from './db/models';
 import Routes from './routes';
 
@@ -7,6 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload({ useTempFiles: true }));
 
 Routes(app);
 

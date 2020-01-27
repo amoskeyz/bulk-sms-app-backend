@@ -28,3 +28,9 @@ export const login = Joi.object().keys({
     .required()
     .min(6),
 });
+
+export const phoneBook = Joi.object().keys({
+  phoneNumbers: Joi.string()
+    .required()
+    .trim(),
+});
