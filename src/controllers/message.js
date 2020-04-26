@@ -7,7 +7,7 @@ export default {
     const { text, from, to } = req.body;
     let isPage;
     try {
-      const { creditUnit, id } = req.user;
+      const { wallet, id } = req.user;
 
       const isDecimal = (text.length % 160);
 
@@ -15,23 +15,27 @@ export default {
       else isPage = ((text.length / 160) + 1);
 
       const totalPage = Math.floor(isPage);
-      const recipient = to.split(',');
-      const totalUnit = (totalPage * recipient.length);
+      const recip = to.split(',');
+      const totalUnit = (totalPage * recip.length);
 
-      if (Number(creditUnit) < totalUnit) return errorStatus(res, 400, 'Insufficient Unit to perform this Operation');
+      if ((Number(wallet) / 0.9) < totalUnit) return errorStatus(res, 400, 'Insufficient Unit to perform this Operation');
 
       const send = await Message.sendMessage(text, from, to);
-      await db.User.update({ creditUnit: Number(creditUnit) - totalUnit }, { where: { id } });
+
+      // if (send.split(' ')[0] !== 'OK') return errorStatus(res, 400, 'Message Not Sent');
+
+      await db.User.update({ wallet: Number(wallet) - (totalUnit * 0.9) }, { where: { id } });
+
       const message = await db.Message.create({
         sender: from,
         recipient: to,
         userId: id,
-        text
+        text,
+        phone: recip
       });
       return successStatus(res, 200, 'data', { send, message });
     } catch (e) {
       /* istanbul ignore next */
-      console.log(e);
       return errorStatus(res, 400, 'Message Not Sent');
     }
   },
@@ -47,7 +51,6 @@ export default {
       return successStatus(res, 200, 'data', { message: `${unit} credit unit added successfully to '${email}'` });
     } catch (e) {
     /* istanbul ignore next */
-      console.log(e);
       return errorStatus(res, 500, 'Server Error');
     }
   },
@@ -61,7 +64,6 @@ export default {
       return successStatus(res, 200, 'data', sentMessage);
     } catch (e) {
       /* istanbul ignore next */
-      console.log(e);
       return errorStatus(res, 500, 'Server Error');
     }
   },
@@ -79,7 +81,6 @@ export default {
       return errorStatus(res, 400, 'Message Not Found');
     } catch (e) {
       /* istanbul ignore next */
-      console.log(e);
       return errorStatus(res, 500, 'Server Error');
     }
   },
@@ -98,7 +99,6 @@ export default {
       return errorStatus(res, 400, 'Message Not Found');
     } catch (e) {
       /* istanbul ignore next */
-      console.log(e);
       return errorStatus(res, 500, 'Server Error');
     }
   }

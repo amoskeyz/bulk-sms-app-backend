@@ -9,7 +9,8 @@ const user = [
     lastName: 'yesrer',
     email: 'usero1@gmail.com',
     password: '5m5am0a843r03',
-    username: 'testt'
+    username: 'testt',
+    phoneNumber: '090564567'
   },
 
   {
@@ -17,7 +18,8 @@ const user = [
     lastName: 'yesrer',
     email: 'useeeiir1@gmail.com',
     password: '5m5am0a843r03',
-    username: 'testt'
+    username: 'testt',
+    phoneNumber: '090564567'
   },
   {
     email: 'usero1@gmail.com',
@@ -41,7 +43,8 @@ const user = [
     email: process.env.SUPER_ADMIN_EMAIL,
     password: process.env.SUPER_ADMIN_PASSWORD_TEST,
     username: 'isAdministrator',
-    isAdmin: true
+    isAdmin: true,
+    phoneNumber: '090564567'
   }
 ];
 

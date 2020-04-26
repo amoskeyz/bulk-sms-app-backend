@@ -1,19 +1,13 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Messages', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Transactions', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    sender: {
+    method: {
       type: Sequelize.STRING
-    },
-    recipient: {
-      type: Sequelize.TEXT
-    },
-    text: {
-      type: Sequelize.TEXT
     },
     createdAt: {
       allowNull: false,
@@ -24,5 +18,5 @@ module.exports = {
       type: Sequelize.DATE
     }
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Messages')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Transactions')
 };

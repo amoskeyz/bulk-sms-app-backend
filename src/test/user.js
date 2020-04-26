@@ -58,7 +58,7 @@ describe('/api/v1/user', () => {
         .send({ firstName: '' })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
-          expect(res.body).to.have.property('error').with.lengthOf(5);
+          expect(res.body).to.have.property('error').with.lengthOf(6);
           done();
         });
     });
@@ -75,7 +75,7 @@ describe('/api/v1/user', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.have.property('error');
-          expect(res.body).to.have.property('error').with.lengthOf(1);
+          expect(res.body).to.have.property('error').with.lengthOf(2);
           done();
         });
     });

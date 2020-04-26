@@ -34,7 +34,7 @@ describe('/api/v1/user/phonebook', () => {
       chai.request(app)
         .post('/api/v1/user/phonebook')
         .set('x-access-token', userToken)
-        .send({ phoneNumbers: '080987876675' })
+        .send({ contacts: '080987876675', name: 'test' })
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.have.property('message');
@@ -46,11 +46,11 @@ describe('/api/v1/user/phonebook', () => {
       chai.request(app)
         .post('/api/v1/user/phonebook')
         .set('x-access-token', userToken)
-        .send({ phoneNumbers: '080987876675' })
+        .send({ contacts: '080987876675', name: 'test' })
         .end((err, res) => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal('phoneBook already exist, Try Updating instead');
+          expect(res.body.error).to.equal('phoneBook \'test\' already exist');
           done();
         });
     });
