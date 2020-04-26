@@ -9,7 +9,10 @@ module.exports = {
     userId: {
       type: Sequelize.INTEGER
     },
-    url: {
+    contacts: {
+      type: Sequelize.ARRAY(Sequelize.TEXT)
+    },
+    name: {
       type: Sequelize.STRING
     },
     createdAt: {

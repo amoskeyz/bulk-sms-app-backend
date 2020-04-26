@@ -58,5 +58,47 @@ export default {
       /* istanbul ignore next */
       return errorStatus(res, 500, 'Server Error');
     }
+  },
+
+  handleGetUser: async (req, res) => {
+    const { email } = req.body;
+
+    const newEmail = email.toLowerCase();
+
+    try {
+      const user = await db.User.findOne({
+        where: { email: newEmail }
+      });
+
+      if (!user) {
+        return errorStatus(res, 400, `'${email}' does not exist`);
+      }
+console.log({dataValues: user})
+      return successStatus(res, 200, 'data', user.dataValues);
+    } catch (e) {
+      /* istanbul ignore next */
+      return errorStatus(res, 500, 'Server Error');
+    }
+  },
+
+  handleGetUserEmail: async (req, res) => {
+    const { email } = req.body;
+
+    const newEmail = email.toLowerCase();
+
+    try {
+      const user = await db.User.findOne({
+        where: { email: newEmail }
+      });
+
+      if (!user) {
+        return errorStatus(res, 400, `'${email}' does not exist`);
+      }
+// console.log({dataValues: user})
+      return successStatus(res, 200, 'data', user.email);
+    } catch (e) {
+      /* istanbul ignore next */
+      return errorStatus(res, 500, 'Server Error');
+    }
   }
 };

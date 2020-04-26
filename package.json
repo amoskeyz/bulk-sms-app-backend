@@ -11,6 +11,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "cross-env NODE_ENV=development nodemon --watch src --exec babel-node src/app.js",
     "lint": "eslint ./src --fix",
+    "start": "babel-node src/app.js",
     "test": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register mocha src/test --exit",
     "testdev": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register  mocha src/test --exit && npm run test:undo:migration"
   },
