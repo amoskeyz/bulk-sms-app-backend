@@ -8,7 +8,10 @@ import { authenticate } from '../../middleware';
 const route = Router();
 
 route.post('/signup', Validators(signUp), User.handleSignUp);
+route.post('/', authenticate, User.handleGetUser);
+route.post('/email', User.handleGetUserEmail);
 route.post('/login', Validators(login), User.handleLogin);
 route.post('/phonebook', authenticate, Validators(phoneBook), Contact.createPhoneBook);
+route.get('/phonebook', authenticate, Contact.getContacts);
 
 export default route;

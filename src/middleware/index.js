@@ -21,7 +21,7 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    return res.status(400).send({
+    return res.status(403).send({
       error: 'Unauthorized access',
     });
   }

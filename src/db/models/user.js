@@ -9,7 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     username: DataTypes.STRING,
     creditUnit: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+    isAdmin: DataTypes.BOOLEAN,
+    phoneNumber: DataTypes.STRING,
+    wallet: DataTypes.STRING,
+    image: DataTypes.STRING,
+    inAppNotification: DataTypes.BOOLEAN,
+    emailNotification: DataTypes.BOOLEAN,
+    delivery: DataTypes.BOOLEAN,
+    reminder: DataTypes.BOOLEAN,
+    senderId: DataTypes.STRING,
   }, {
     hooks: {
       beforeCreate: async (user) => {
@@ -33,7 +41,9 @@ module.exports = (sequelize, DataTypes) => {
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
-      id: this.id
+      id: this.id,
+      wallet: this.wallet,
+      image: this.image
     };
     if (addToken) userData.token = getToken(this.id, this.email);
     return userData;

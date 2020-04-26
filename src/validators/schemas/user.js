@@ -17,6 +17,7 @@ export const signUp = Joi.object().keys({
     .required()
     .min(6),
   username: Joi.string().required(),
+  phoneNumber: Joi.string().required(),
 });
 
 export const login = Joi.object().keys({
@@ -30,7 +31,10 @@ export const login = Joi.object().keys({
 });
 
 export const phoneBook = Joi.object().keys({
-  phoneNumbers: Joi.string()
+  contacts: Joi.string()
+    .required()
+    .trim(),
+  name: Joi.string()
     .required()
     .trim(),
 });
