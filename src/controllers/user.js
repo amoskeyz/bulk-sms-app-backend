@@ -93,7 +93,6 @@ export default {
       if (!user) {
         return errorStatus(res, 400, `'${email}' does not exist`);
       }
-
       return successStatus(res, 200, 'data', user.email);
     } catch (e) {
       /* istanbul ignore next */
