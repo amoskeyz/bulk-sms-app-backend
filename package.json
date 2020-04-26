@@ -14,7 +14,7 @@
     "start": "cross-env NODE_ENV=production babel-node src/app.js",
     "test": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register mocha src/test --exit",
     "testdev": "npm run test:db:migration && cross-env NODE_ENV=test nyc --require @babel/register  mocha src/test --exit && npm run test:undo:migration",
-    "heroku-postbuild": "cross-env NODE_ENV=production npm run migrate"
+    "heroku-postbuild": "cross-env NODE_ENV=production sequelize db:migrate"
   },
   "repository": {
     "type": "git",
