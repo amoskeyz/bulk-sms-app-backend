@@ -29,6 +29,11 @@
   },
   "homepage": "https://github.com/amoskeyz/bulk-sms-app-backend#readme",
   "dependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "@hapi/joi": "^16.1.8",
     "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
@@ -51,11 +56,6 @@
     "twilio": "^3.39.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/node": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
     "coveralls": "^3.0.9",
     "cross-env": "^6.0.3",
     "eslint": "^6.7.2",
