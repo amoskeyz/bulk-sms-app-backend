@@ -6,7 +6,7 @@ import { creditUnit } from '../../validators/schemas/transaction';
 
 const route = Router();
 
-route.put('/', Validators(creditUnit), authenticate, isAdministrator, Transaction.makeTransaction);
+route.post('/', Validators(creditUnit), authenticate, isAdministrator, Transaction.makeTransaction);
 route.get('/', authenticate, Transaction.getTransactions);
 // route.delete('/:messageId', authenticate, Message.deleteMessage);
 
