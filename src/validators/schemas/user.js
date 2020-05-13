@@ -38,3 +38,22 @@ export const phoneBook = Joi.object().keys({
     .required()
     .trim(),
 });
+
+export const update = Joi.object().keys({
+  firstName: Joi.string()
+    .regex(/^[A-Za-z]{3,}$/)
+    .trim(),
+  // .required(),
+  lastName: Joi.string()
+    .regex(/^[A-Za-z]{3,}$/)
+    .trim(),
+  // .required(),
+  username: Joi.string(),
+  phoneNumber: Joi.string(),
+  reminder: Joi.boolean(),
+  delivery: Joi.boolean(),
+  image: Joi.object(),
+  inAppNotification: Joi.boolean(),
+  emailNotification: Joi.boolean(),
+  senderId: Joi.string(),
+});
