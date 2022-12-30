@@ -51,7 +51,7 @@
     "express-fileupload": "^1.1.6",
     "fast-csv": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^7.0.0",
+    "mocha": "^10.2.0",
     "nexmo": "^2.5.3",
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
